@@ -39,10 +39,7 @@ function App() {
         <FormPost createPost={createPost} />
         <hr />
         <PostFilter filter={filter} setFilter={setFilter}/>
-        {sortedAndFilteredPosts.length
-            ? <PostList title={'Post list title'} posts={sortedAndFilteredPosts} removePost={removePost}/>
-            :<h2>Посты не найдены</h2>
-        }
+        <PostList title={'Post list title'} posts={sortedAndFilteredPosts} removePost={removePost}/>
     </div>
   );
 }
