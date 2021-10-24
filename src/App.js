@@ -38,6 +38,12 @@ function App() {
             :[...posts]
     }, [posts, selectedSort])
 
+
+
+    const sortedAndFilteredPosts = useMemo(() => {
+        return sortedPosts.filter(post => post.title.toLowerCase().includes(searchValue))
+    }, [sortedPosts, searchValue])
+
   return (
     <div className="App">
         <FormPost createPost={createPost} />
@@ -51,8 +57,8 @@ function App() {
                 {value: 'title', name: 'По названию'},
                 {value: 'body', name: 'По описанию'}
             ]}/>
-        {sortedPosts.length
-            ? <PostList title={'Post list title'} posts={sortedPosts} removePost={removePost}/>
+        {sortedAndFilteredPosts.length
+            ? <PostList title={'Post list title'} posts={sortedAndFilteredPosts} removePost={removePost}/>
             :<h2>Посты не найдены</h2>
         }
     </div>
