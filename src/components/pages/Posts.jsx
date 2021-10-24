@@ -27,7 +27,7 @@ function Posts() {
 
     useEffect(()=>{
         fetchPosts()
-    }, [page])
+    }, [page, limit])
     const [isModalActive, setIsModalActive] = useState(false)
 
     const [filter, setFilter] = useState({sort:'', searchString: ''})
@@ -50,7 +50,7 @@ function Posts() {
             <Button onClick={()=>setIsModalActive(true)}>New post</Button>
 
             <hr />
-            <PostFilter filter={filter} setFilter={setFilter}/>
+            <PostFilter filter={filter} setFilter={setFilter} limit={limit} setLimit={setLimit}/>
             <div className="PostListContainer">
 
                 {isPostLoading
