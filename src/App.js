@@ -5,8 +5,7 @@ import Input from "./components/UI/Input/Input";
 import { useState} from "react";
 
 function App() {
-    const [title, setTitle] = useState('')
-    const [body, setBody] = useState('')
+    const [post, setPost] = useState({title: '', body: ''})
     const [posts, setPosts] = useState(
         [
             { id: 1, title: 'Post 1',  body: 'gdfsgsdfgdsfg'},
@@ -19,23 +18,16 @@ function App() {
 
     const addNewPost = (e)=>{
         e.preventDefault();
-        const newPost = {
-            id: Date.now(),
-            title,
-            body
-        }
-        setPosts([...posts, newPost])
-        setTitle('')
-        setBody('')
-
+        setPosts([...posts, {...post, id: Date.now()}])
+        setPost({title: '', body: ''})
     }
 
 
   return (
     <div className="App">
         <form>
-            <Input type="text" placeholder="Add tile" value={title} onChange={e=> setTitle(e.target.value)}/>
-            <Input type="text" placeholder="post content" value={body} onChange={e=> setBody(e.target.value)}/>
+            <Input type="text" placeholder="Add tile" value={post.title} onChange={e=> setPost({...post, title: e.target.value})}/>
+            <Input type="text" placeholder="post content" value={post.body} onChange={e=> setPost({...post, body: e.target.value})}/>
             <Button onClick={addNewPost} >Create post</Button>
         </form>
         <PostList title={'Post list title'} posts={posts}/>
