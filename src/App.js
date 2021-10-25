@@ -1,10 +1,11 @@
 import "./App.css"
 import PostList from "./components/PostList/PostList";
-import {useMemo, useState} from "react";
+import {useState} from "react";
 import FormPost from "./components/FormPost/FormPost";
 import PostFilter from "./components/PostFilter/PostFilter";
 import Modal from "./components/UI/Modal/Modal";
 import Button from "./components/UI/Button/Button";
+import {usePosts} from "./hooks/usePosts";
 
 function App() {
     const [posts, setPosts] = useState(
@@ -28,16 +29,17 @@ function App() {
         setPosts(posts.filter(p=>p.id !== postID))
     }
 
-    const sortedPosts = useMemo(()=> {
-        return filter.sort
-            ?[...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
-            :[...posts]
-    }, [posts, filter.sort])
+    // const sortedPosts = useMemo(()=> {
+    //     return filter.sort
+    //         ?[...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
+    //         :[...posts]
+    // }, [posts, filter.sort])
+    //
+    // const sortedAndFilteredPosts = useMemo(() => {
+    //     return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.searchString))
+    // }, [sortedPosts, filter.searchString])
 
-    const sortedAndFilteredPosts = useMemo(() => {
-        return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.searchString))
-    }, [sortedPosts, filter.searchString])
-
+    const sortedAndFilteredPosts= usePosts(filter.sort, posts, filter.searchString, 'title');
 
   return (
     <div className="App">
