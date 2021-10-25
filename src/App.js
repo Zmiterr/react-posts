@@ -1,21 +1,27 @@
 import "./App.css"
 import PostList from "./components/PostList/PostList";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import FormPost from "./components/FormPost/FormPost";
 import PostFilter from "./components/PostFilter/PostFilter";
 import Modal from "./components/UI/Modal/Modal";
 import Button from "./components/UI/Button/Button";
 import {usePosts} from "./hooks/usePosts";
+import axios from "axios";
 
 function App() {
     const [posts, setPosts] = useState(
         [
-            { id: 1, title: 'qPost 1',  body: 'gdfsgsdfgdsfg'},
-            { id: 2, title: 'Post 2',  body: 'jkghjgjg'},
-            { id: 3, title: 'Post 3' ,  body: 'fdsfsadf' },
-            { id: 4, title: 'Post 4',  body: 'lorem3 fdssd' },
+            { id: 0, title: '',  body: ''}
         ]
     )
+
+    async function fetchPosts(){
+        const posts = await axios.get('https://jsonplaceholder.typicode.com/posts')
+        setPosts(posts.data)
+    }
+    useEffect(()=>{
+        fetchPosts()
+    }, [])
     const [isModalActive, setIsModalActive] = useState(false)
 
     const [filter, setFilter] = useState({sort:'', searchString: ''})
