@@ -8,6 +8,7 @@ import Button from "./components/UI/Button/Button";
 import {usePosts} from "./hooks/usePosts";
 import PostService from "./components/API/PostService";
 import Loader from "react-loader-spinner";
+import {useFetch} from "./hooks/useFetch";
 
 
 function App() {
@@ -17,14 +18,19 @@ function App() {
         ]
     )
 
-    const [isPostLoading, setIsPostLoading] = useState(false)
+    // const [isPostLoading, setIsPostLoading] = useState(false)
 
-    async function fetchPosts(){
-        setIsPostLoading(true)
-        const posts = await PostService.getAllPosts()
+    const [fetchPosts, errorMessage, isPostLoading] = useFetch(async ()=>{
+        const posts= await PostService.getAllPosts()
         setPosts(posts)
-        setIsPostLoading(false)
-    }
+    })
+
+    // async function fetchPosts(){
+    //     setIsPostLoading(true)
+    //     const posts = await PostService.getAllPosts()
+    //     setPosts(posts)
+    //     setIsPostLoading(false)
+    // }
     useEffect(()=>{
         fetchPosts()
     }, [])
