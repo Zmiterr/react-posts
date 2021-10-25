@@ -2,9 +2,12 @@ import React from 'react';
 import PostItem from "../PostItem/PostItem";
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-const PostList = ({title, posts, removePost}) => {
-    if(!posts.length){
+const PostList = ({title, posts, removePost, errorMessage}) => {
+    if(!posts.length&&!errorMessage){
         return <h2>Посты не найдены</h2>
+    }
+    if(errorMessage){
+        return <h2>{errorMessage}</h2>
     }
 
     return (

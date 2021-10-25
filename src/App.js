@@ -1,36 +1,27 @@
 import "./App.css"
-import PostList from "./components/PostList/PostList";
 import {useEffect, useState} from "react";
+import Loader from "react-loader-spinner";
+import PostList from "./components/PostList/PostList";
 import FormPost from "./components/FormPost/FormPost";
 import PostFilter from "./components/PostFilter/PostFilter";
+import PostService from "./components/API/PostService";
 import Modal from "./components/UI/Modal/Modal";
 import Button from "./components/UI/Button/Button";
 import {usePosts} from "./hooks/usePosts";
-import PostService from "./components/API/PostService";
-import Loader from "react-loader-spinner";
 import {useFetch} from "./hooks/useFetch";
-
 
 function App() {
     const [posts, setPosts] = useState(
-        [
-            { id: 0, title: '',  body: ''}
-        ]
+        []
     )
-
-    // const [isPostLoading, setIsPostLoading] = useState(false)
 
     const [fetchPosts, errorMessage, isPostLoading] = useFetch(async ()=>{
         const posts= await PostService.getAllPosts()
         setPosts(posts)
     })
 
-    // async function fetchPosts(){
-    //     setIsPostLoading(true)
-    //     const posts = await PostService.getAllPosts()
-    //     setPosts(posts)
-    //     setIsPostLoading(false)
-    // }
+    console.log({errorMessage})
+
     useEffect(()=>{
         fetchPosts()
     }, [])
@@ -46,16 +37,6 @@ function App() {
         setPosts(posts.filter(p=>p.id !== postID))
     }
 
-    // const sortedPosts = useMemo(()=> {
-    //     return filter.sort
-    //         ?[...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
-    //         :[...posts]
-    // }, [posts, filter.sort])
-    //
-    // const sortedAndFilteredPosts = useMemo(() => {
-    //     return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.searchString))
-    // }, [sortedPosts, filter.searchString])
-
     const sortedAndFilteredPosts= usePosts(filter.sort, posts, filter.searchString, 'title');
 
   return (
@@ -68,7 +49,8 @@ function App() {
         <hr />
         <PostFilter filter={filter} setFilter={setFilter}/>
         <div className="PostListContainer">
-        {isPostLoading
+
+            {isPostLoading
             ?
                 <Loader
                     type="ThreeDots"
@@ -77,7 +59,8 @@ function App() {
                     width={100}
                     timeout={3000} //3 secs
                 />
-            :<PostList title={'Post list title'} posts={sortedAndFilteredPosts} removePost={removePost}/>}
+            :<PostList title={'Post list title'} posts={sortedAndFilteredPosts} removePost={removePost} errorMessage={errorMessage}/>
+        }
         </div>
     </div>
   );

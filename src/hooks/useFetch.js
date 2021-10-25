@@ -15,6 +15,6 @@ export const useFetch = (cb) => {
         }
     }
 
-    return [fetching, isLoading, error]
+    return [fetching, error, isLoading]
 
 }
