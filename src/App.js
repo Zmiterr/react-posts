@@ -3,6 +3,8 @@ import PostList from "./components/PostList/PostList";
 import {useMemo, useState} from "react";
 import FormPost from "./components/FormPost/FormPost";
 import PostFilter from "./components/PostFilter/PostFilter";
+import Modal from "./components/UI/Modal/Modal";
+import Button from "./components/UI/Button/Button";
 
 function App() {
     const [posts, setPosts] = useState(
@@ -13,11 +15,13 @@ function App() {
             { id: 4, title: 'Post 4',  body: 'lorem3 fdssd' },
         ]
     )
+    const [isModalActive, setIsModalActive] = useState(false)
 
     const [filter, setFilter] = useState({sort:'', searchString: ''})
 
     const createPost = (post) => {
         setPosts([...posts, post])
+        setIsModalActive(false)
     }
 
     const removePost = (postID) => {
@@ -34,9 +38,14 @@ function App() {
         return sortedPosts.filter(post => post.title.toLowerCase().includes(filter.searchString))
     }, [sortedPosts, filter.searchString])
 
+
   return (
     <div className="App">
-        <FormPost createPost={createPost} />
+        <Modal isModalActive={isModalActive} setIsModalActive={setIsModalActive}>
+            <FormPost createPost={createPost} />
+        </Modal>
+        <Button onClick={()=>setIsModalActive(true)}>New post</Button>
+
         <hr />
         <PostFilter filter={filter} setFilter={setFilter}/>
         <PostList title={'Post list title'} posts={sortedAndFilteredPosts} removePost={removePost}/>
