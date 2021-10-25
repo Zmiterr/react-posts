@@ -6,7 +6,9 @@ import PostFilter from "./components/PostFilter/PostFilter";
 import Modal from "./components/UI/Modal/Modal";
 import Button from "./components/UI/Button/Button";
 import {usePosts} from "./hooks/usePosts";
-import axios from "axios";
+import PostService from "./components/API/PostService";
+import Loader from "react-loader-spinner";
+
 
 function App() {
     const [posts, setPosts] = useState(
@@ -15,9 +17,13 @@ function App() {
         ]
     )
 
+    const [isPostLoading, setIsPostLoading] = useState(false)
+
     async function fetchPosts(){
-        const posts = await axios.get('https://jsonplaceholder.typicode.com/posts')
-        setPosts(posts.data)
+        setIsPostLoading(true)
+        const posts = await PostService.getAllPosts()
+        setPosts(posts)
+        setIsPostLoading(false)
     }
     useEffect(()=>{
         fetchPosts()
@@ -28,7 +34,6 @@ function App() {
 
     const createPost = (post) => {
         setPosts([...posts, post])
-        setIsModalActive(false)
     }
 
     const removePost = (postID) => {
@@ -56,7 +61,18 @@ function App() {
 
         <hr />
         <PostFilter filter={filter} setFilter={setFilter}/>
-        <PostList title={'Post list title'} posts={sortedAndFilteredPosts} removePost={removePost}/>
+        <div className="PostListContainer">
+        {isPostLoading
+            ?
+                <Loader
+                    type="ThreeDots"
+                    color="#00BFFF"
+                    height={100}
+                    width={100}
+                    timeout={3000} //3 secs
+                />
+            :<PostList title={'Post list title'} posts={sortedAndFilteredPosts} removePost={removePost}/>}
+        </div>
     </div>
   );
 }

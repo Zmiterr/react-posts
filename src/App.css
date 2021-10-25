@@ -73,3 +73,8 @@
 .navbar__links {
     margin-left: auto;
 }
+
+.PostListContainer {
+    display: flex;
+    justify-content: center;
+}
