@@ -25,14 +25,6 @@ function App() {
         setPagesCount(getPagesCount(totalCount, limit))
     })
 
-    const pagesArray = useMemo(()=>{
-        const pagesArray = []
-        for(let i=1; i<=pagesCount; i++){
-            pagesArray.push(i)
-        }
-        return pagesArray
-    },[pagesCount])
-
     useEffect(()=>{
         fetchPosts()
     }, [page])
@@ -73,7 +65,7 @@ function App() {
             :<PostList title={'Post list title'} posts={sortedAndFilteredPosts} removePost={removePost} errorMessage={errorMessage}/>
         }
         </div>
-        <Pagination pagesArray={pagesArray} page={page} setPage={setPage}/>
+        <Pagination pagesCount={pagesCount} page={page} setPage={setPage}/>
     </div>
   );
 }
