@@ -10,6 +10,7 @@ import Button from "./components/UI/Button/Button";
 import {usePosts} from "./hooks/usePosts";
 import {useFetch} from "./hooks/useFetch";
 import {getPagesCount} from "./components/utils/pages";
+import Pagination from "./components/UI/Pagination/Pagination";
 
 function App() {
     const [posts, setPosts] = useState([])
@@ -72,9 +73,7 @@ function App() {
             :<PostList title={'Post list title'} posts={sortedAndFilteredPosts} removePost={removePost} errorMessage={errorMessage}/>
         }
         </div>
-        <div className="page__wrapper">
-            {pagesArray.map(p => <span key={p} className={p === page?"page page__current":"page"} onClick={()=>setPage(p)}>{p}</span>)}
-        </div>
+        <Pagination pagesArray={pagesArray} page={page} setPage={setPage}/>
     </div>
   );
 }
