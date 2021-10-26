@@ -73,6 +73,15 @@
 
 .navbar__links {
     margin-left: auto;
+    margin-right: 10px;
+}
+
+.navbar__link {
+    margin-right: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    color: teal;
+    text-transform: uppercase;
 }
 
 .PostListContainer {
