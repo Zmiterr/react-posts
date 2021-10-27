@@ -15,13 +15,13 @@ import Loader from "react-loader-spinner";
 function Posts() {
     const [posts, setPosts] = useState([])
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(5)
+    const [limit, setLimit] = useState(10)
     const [pagesCount, setPagesCount] = useState(0)
 
     const [fetchPosts, errorMessage, isPostLoading] = useFetch(async ()=>{
-        const posts= await PostService.getAllPosts(page, limit)
-        setPosts(posts.data)
-        const totalCount = posts.headers['x-total-count']
+        const response= await PostService.getAllPosts(page, limit)
+        setPosts([ ...response.data])
+        const totalCount = response.headers['x-total-count']
         setPagesCount(getPagesCount(totalCount, limit))
     })
 
