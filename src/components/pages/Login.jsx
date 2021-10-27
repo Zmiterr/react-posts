@@ -9,6 +9,7 @@ const Login = () => {
     const login = (e) => {
       e.preventDefault()
         setIsAuthorised(true)
+        localStorage.setItem('isAuth', 'true')
     }
     return (
         <div>
