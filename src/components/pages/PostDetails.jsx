@@ -60,7 +60,7 @@ const PostDetails = () => {
                     />
                     :<div>
                         {commentsDetails.map(c=>
-                            <div>
+                            <div key={c.id}>
                                 <h4>{c.email}</h4>
                                 <p>{c.body}</p>
                             </div>
