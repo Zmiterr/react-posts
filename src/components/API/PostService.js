@@ -6,7 +6,15 @@ export default class PostService {
                 _page: page,
                 _limit: limit
             }})
+    }
 
+    static async  getPostData(postId) {
+        return await axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}`)
+    }
 
+    static async  getCommentsData(postId) {
+        return await axios.get(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`)
     }
 }
+
+

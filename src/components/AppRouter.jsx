@@ -3,12 +3,16 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import Posts from "./pages/Posts";
 import About from "./pages/About";
 import Error from "./pages/Error";
+import PostDetails from "./pages/PostDetails";
 
 const AppRouter = () => {
     return (
         <Switch>
-            <Route path={'/'} exact>
+            <Route exact path={'/posts'} >
                 <Posts  />
+            </Route>
+            <Route exact path={'/posts/:id'} >
+                <PostDetails  />
             </Route>
             <Route path={'/about'}>
                 <About />
@@ -16,7 +20,7 @@ const AppRouter = () => {
             <Route path={'/Error'}>
                 <Error />
             </Route>
-            <Redirect to={'/Error'} />
+            <Redirect to={'/Posts'} />
         </Switch>
     );
 };
