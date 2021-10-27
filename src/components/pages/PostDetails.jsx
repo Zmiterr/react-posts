@@ -18,6 +18,8 @@ const PostDetails = () => {
         setCommentsDetails(comments.data)
     })
 
+    //TODO ругается на пустой массий зависимостей. 2 или 1 useEffect?
+
     useEffect(()=>{
         fetchPosts()
         // fetchComments()
